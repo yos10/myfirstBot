@@ -43,9 +43,11 @@ function getHomeTimeLine() {
     });
 }
 
+const botName = process.env.TWITTER_BOT_NAME;
+
 function isCheckedTweet(homeTimeLineTweet) {
   // ボット自身のツイートは無視する。
-  if (homeTimeLineTweet.user.screen_name === 'YosBot') {
+  if (homeTimeLineTweet.user.screen_name === `${botName}`) {
     return true;
   }
 
@@ -82,7 +84,7 @@ const cronJob = new cron({
 });
 // getHomeTimeLine();
 
-const stream = twitter.stream('statuses/filter', { track: '@YosBot' })
+const stream = twitter.stream('statuses/filter', { track: `@${botName}` })
   .on('data', (tweet) => {
     console.log(tweet.text);
 
